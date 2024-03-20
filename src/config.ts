@@ -4,7 +4,7 @@ import path from 'path'
 dotenv.config()
 
 export const config = {
-    PORT: process.env.PORT,
+    PORT: parseInt(process.env.PORT || '4000'),
     DB_CONNECTION: process.env.DB_CONNECTION,
     PUBLIC_PATH: path.join(__dirname, '../public'),
     TEST_FILE_NAME: 'test.png',
