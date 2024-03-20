@@ -1,25 +1,16 @@
-import { ApolloServer } from "@apollo/server"
-import { startStandaloneServer } from "@apollo/server/standalone"
 import { db } from "./database/Database"
 import { config } from "./config"
-
-const server = new ApolloServer({
-  typeDefs: `
-    type Query {
-      hello: String
-    }
-  `,
-  resolvers: {
-    Query: {
-      hello: () => 'Hello, world!',
-    },
-  },
-})
+import { startStandaloneServer } from '@apollo/server/standalone'
+import { apolloServer } from "./graphql"
+import { app } from "./app"
 
 const run = async () => {
   await db.setup()
-  const { url } = await startStandaloneServer(server, { listen: { port: config.PORT } })
-  console.log(`🚀 Server ready at ${url}`)
+  const { url } = await startStandaloneServer(apolloServer, { listen: { port: config.PORT } })
+  console.log(`🚀 GraphQL Server ready at ${url}`)
+  app.listen(config.PORT+1, () => {
+    console.log(`REST Server is running on port ${config.PORT+1}`)
+  })
 }
 
 run().catch((err) => console.error(err))
