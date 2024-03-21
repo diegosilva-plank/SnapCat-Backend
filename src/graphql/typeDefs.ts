@@ -21,4 +21,8 @@ export const typeDefs = gql`
     pets: [Pet!]!
     postsOfPet(nickname: String!): [Post!]!
   }
+
+  type Mutation {
+    deletePet(nickname: String!): Boolean
+  }
 `
